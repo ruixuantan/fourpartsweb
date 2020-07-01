@@ -1,0 +1,30 @@
+click==7.1.2
+itsdangerous==1.1.0
+MarkupSafe==1.1.1
+python-dateutil==2.8.1
+pytz==2020.1
+six==1.15.0
+
+# Fourparts dependencies
+numpy==1.19.0
+pandas==1.0.5
+py-midicsv==1.10.0
+
+# Database
+psycopg2==2.8.5
+Flask-SQLAlchemy==2.4.1
+
+# API
+flask-marshmallow==0.13.0
+flask-classful==0.14.2
+
+# Web stuff
+Flask==1.1.2
+Jinja2==2.11.2
+Werkzeug==1.0.1
+
+# Server for production and development
+gunicorn==19.10.0
+
+# Extensions
+flask-debugtoolbar==0.10.0

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FourParts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/main.css') }}">
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js" crossorigin></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1>FOUR PARTS</h1>
+    </div>
+    <div class="container">
+      <br>
+      {% block body %}{% endblock %}
+      <br>
+    </div>
+    <script
+      src="{{ url_for('static', filename='scripts/main.js') }}">
+    </script>
+
+    <hr />
+
+    <!-- Site footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h6>About</h6>
+            <p class="text-justify">
+              A project to analyse Bach Chorales. Currently, it can check the presence of
+              parallel 5ths and 8ths. Future implementations of possibly: detection of 
+              cadences, labelling of chords, generation of bach chorales. How it works: 
+              At every instance when there are 4 'on' note events, a 'chord' is formed. 
+              These chords will then be used to check for parallels between them.
+              <i>When uploading the midi file, ensure that is has strictly only 4 parts.</i>
+            </p>
+          </div>
+
+          <div class="col">
+            <h6>Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="https://github.com">GitHub</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
