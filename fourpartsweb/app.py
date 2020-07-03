@@ -22,11 +22,7 @@ def create_app():
 
     MidifileView.register(app)
 
-    with app.app_context():
-        from fourpartsweb.extensions import db
-        db.create_all()
-
-        return app
+    return app
 
 
 def extensions(app):
