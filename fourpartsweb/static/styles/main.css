@@ -9,7 +9,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .file-upload {
     background-color: #ffffff;
-    width: 600px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -86,45 +86,4 @@ h1,h2,h3,h4,h5,h6 {
     margin-bottom: 10px;
     padding: 20px;
     text-align: left;
-}
-
-.site-footer{
-    padding:45px 0 20px;
-    font-size:15px;
-    line-height:24px;
-}
-
-.site-footer h6{
-    font-size:16px;
-    text-transform:uppercase;
-    margin-top:5px;
-    letter-spacing:2px
-}
-
-.site-footer a{
-    color:#737373;
-}
-
-.site-footer a:hover{
-    color:#3366cc;
-    text-decoration:none;
-}
-
-.footer-links{
-    padding-left:0;
-    list-style:none;
-    text-align:center;
-}
-
-.footer-links li{
-    display:block
-}
-
-.footer-links a:active,.footer-links a:focus,.footer-links a:hover{
-    color:#3366cc;
-    text-decoration:none;
-}
-
-.footer-links.inline li{
-    display:inline-block
 }

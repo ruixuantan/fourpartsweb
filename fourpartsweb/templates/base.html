@@ -4,20 +4,49 @@
     <title>FourParts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='styles/main.css') }}">
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js" crossorigin></script>
+      href="{{ url_for('static', filename='styles/main.css') }}" />
+
+    <link 
+      rel="icon" 
+      type="image/png"
+      href="{{ url_for('static', filename='images/favicon.png') }}" />
+
+    <link 
+      rel="apple-touch-icon" 
+      href="{{ url_for('static', filename='images/logo192.png') }}" />
+
+    <link 
+      rel="manifest" 
+      href="{{ url_for('static', filename='images/manifest.json') }}" />
+
   </head>
   <body>
-    <div class="container-fluid">
-      <h1>FOUR PARTS</h1>
+    <!-- Heading -->
+    <div class="container">
+      <span style="display:block;text-align:center;margin-top:40px;margin-bottom:0px;">
+        <img 
+          alt="FourParts logo"
+          src="{{ url_for('static', filename='images/Logo.png') }}" 
+          style="width:300px;height:98px;" />
+      </span>
     </div>
+    <!-- Heading -->
+
     <div class="container">
       <br>
       {% block body %}{% endblock %}
       <br>
     </div>
+
     <script
       src="{{ url_for('static', filename='scripts/main.js') }}">
     </script>
@@ -25,29 +54,47 @@
     <hr />
 
     <!-- Site footer -->
-    <footer class="site-footer">
-      <div class="container">
+    <!-- Footer -->
+    <footer class="page-footer font-small stylish-color-dark pt-4">
+      <div class="container text-justified">
+
+        <!-- Grid row -->
         <div class="row">
-          <div class="col">
-            <h6>About</h6>
-            <p class="text-justify">
-              A project to analyse Bach Chorales. Currently, it can check the presence of
+
+          <!-- Grid column -->
+          <div class="col-md-12 mx-auto">
+
+            <!-- Content -->
+            <h5 class="font-weight-bold text-uppercase mt-3 mb-4">About</h5>
+            <p> A project to analyse Bach Chorales. Currently, it can check the presence of
               parallel 5ths and 8ths. Future implementations of possibly: detection of 
               cadences, labelling of chords, generation of bach chorales. How it works: 
               At every instance when there are 4 'on' note events, a 'chord' is formed. 
               These chords will then be used to check for parallels between them.
-              <i>When uploading the midi file, ensure that is has strictly only 4 parts.</i>
-            </p>
-          </div>
+              <i>When uploading the midi file, ensure that is has strictly only 4 parts.</i></p>
 
-          <div class="col">
-            <h6>Quick Links</h6>
-            <ul class="footer-links">
-              <li><a href="https://github.com/ruixuantan/fourparts">GitHub</a></li>
-            </ul>
           </div>
+          <!-- Grid column -->
         </div>
+        <!-- Grid row -->
+
+        <!-- Social buttons -->        
+        <ul class="list-unstyled list-inline text-center">
+          <li class="list-inline-item">
+            <a 
+              href="https://github.com/ruixuantan/fourparts"
+              class="btn btn-lg btn-floating btn-git mx-1">
+              <i 
+                class="fa fa-github" 
+                style="color:black;font-size:36px;border-radius:100%;"> </i>
+            </a>
+          </li>
+        </ul>
+        <!-- Social buttons -->
       </div>
+      <!-- Footer Links -->
     </footer>
+    <!-- Site footer --> 
+
   </body>
 </html>
