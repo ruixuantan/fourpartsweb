@@ -1,49 +1,62 @@
-const handleUpload = (url) => {
-  console.log(url)
-  const midifile = url.files[0].name
-  document.getElementById("display-filename").innerHTML = midifile + " ready."
-  document.getElementById("display-filename").style.backgroundColor = 'skyblue'
+const statusBar = (msg, selector) => {
+  if (selector === "READY") {
+    $("#status-bar").text(msg + " ready.")
+    $("#status-bar").css("background-color", "skyblue")
+
+  } else if (selector === "FAIL") {
+    $("#status-bar").text("An error occured")
+    $("#status-bar").css("background-color", "red")
+
+  } else if (selector === "SUCCESS") {
+    $("#status-bar").text("Success!")
+    $("#status-bar").css("background-color", "#4baf50")
+  }
 }
 
-const handleSubmit = (event) => {
-
-  let midifile = document.getElementById("midi-input").files[0]; 
-  console.log(midifile)
-
-  if (midifile == null) {
-    alert("Upload a file first!")
-    return null
-  }
-
-  const formData = new FormData()
-  formData.append('file', midifile)
-
-  const uploadData = {
-    method: 'POST',
-    body: formData
-  }
-
-  fetch('/api/v1/midifile/', uploadData)
-    .then(res => {
-      if (res.status !== 200) {
-        console.log(res.status)
-      }
-      return res.json()
-    })
-    .then(responseData => {
-      if (responseData.hasOwnProperty('error')) {
-        alert(responseData.error)
-        document.getElementById("display-filename").innerHTML = 'An error occured'
-        document.getElementById("display-filename").style.backgroundColor = 'red'
-      } else {
-        location.href = '/download/' + responseData
-        document.getElementById("display-filename").innerHTML = 'Success!'
-        document.getElementById("display-filename").style.backgroundColor = '#4baf50'
-      }
-      midifile = null
-      document.getElementById("midi-input").value = null
-    })
-    .catch(err => {
-      console.log(err)
-    })
+const fileInput = () => {
+  $("#midi-input").change((event) => {
+    const midifile = event.target.files[0].name
+    console.log(midifile)
+    statusBar(midifile, "READY")
+  })
 }
+
+const fileUpload = () => {
+
+  $("button").click(() => {
+
+    let midifile = $("#midi-input")[0].files[0]
+    const formData = new FormData()
+    formData.append('file', midifile)
+
+    if (midifile == null) {
+      alert("Upload a file first!")
+      return null
+    }
+
+    $.ajax({
+      url: '/api/v1/midifile/',
+      type: 'post',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: (res) => {
+        console.log(res)
+        location.href = '/download/' + res
+        statusBar("", "SUCCESS")
+      },
+      error: (err) => {
+        console.log(err)
+        statusBar("", "FAIL")
+      }
+    })
+
+    midifile = null
+    $("#midi-input").val(null)
+  })
+}
+
+$(document).ready(() => {
+  fileInput()
+  fileUpload()
+})
