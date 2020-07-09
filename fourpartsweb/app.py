@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 
 from fourpartsweb.blueprints.index import index
 from fourpartsweb.blueprints.download import download
@@ -21,6 +22,12 @@ def create_app():
     extensions(app)
 
     MidifileView.register(app)
+
+    try: 
+        os.makedirs(app.config["MIDISTORE_PATH"])
+        os.makedirs(app.config["RESULTSTORE_PATH"])
+    except FileExistsError:
+        pass
 
     return app
 

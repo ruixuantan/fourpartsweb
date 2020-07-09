@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import jsonify, request, Response
+from flask import current_app, jsonify, request, Response
 import os
 from werkzeug.utils import secure_filename
 
@@ -29,12 +29,11 @@ class MidifileView(V1FlaskView):
         hashed_filename_mid = hashed_filename + '.mid'
         hashed_filename_csv = hashed_filename + '.csv'
 
-        save_path = "fourpartsweb/storage/"
-        midi_path = save_path + "midifiles/" + hashed_filename_mid
-        csv_path = save_path + "results/" + hashed_filename_csv
+        midi_path = current_app.config["MIDISTORE_PATH"] + hashed_filename_mid
+        csv_path = current_app.config["RESULTSTORE_PATH"] + hashed_filename_csv
 
         # save midifile
-        posted_file.save(os.path.join(save_path + "midifiles/", hashed_filename_mid))
+        posted_file.save(os.path.join(midi_path))
 
         try:
             df = fp.midi_to_df(midi_path)

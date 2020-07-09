@@ -4,17 +4,25 @@
 <div class="container">
   <div class="row" id="uploadContainer">
     <div class="file-upload">
-      <button class="file-upload-btn" type="button" onclick="handleSubmit();">Upload</button>
+      <!-- Upload button -->
+      <button
+        class="file-upload-btn" 
+        type="button">Upload</button>
+
       <div class="midi-upload-wrap">
+
+        <!-- File input -->
         <input
           id="midi-input"
-          class="file-upload-input" type='file' onchange="handleUpload(this)" accept=".mid" />
+          class="file-upload-input" type='file' accept=".mid" />
         <div class="drag-text">
           <h3>Drag and drop a midi file or click to select</h3>
         </div>
       </div>
+
       <br />
-      <div id="display-filename"></div>      
+      <!-- Status bar -->
+      <div id="status-bar"></div>      
     </div>
   </div>
 </div>
