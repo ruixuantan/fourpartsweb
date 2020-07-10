@@ -4,6 +4,9 @@
 # DS_Store
 .DS_Store
 
+# development storage folder
+storage/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
