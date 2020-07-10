@@ -9,7 +9,7 @@ $ docker-compose up postgres
 ```
 
 To configure postgres, open up a new terminal while the image is running and enter:
-```
+```console
 $ docker-compose exec server python3
 Python
 >>> from fourpartsweb.extensions import db
@@ -21,6 +21,11 @@ Python
 ```
 
 Local build is on https://localhost:8000
+
+To run tests:
+```console
+$ docker-compose exec server pytest
+```
 
 ## Notes ##
 Currently, to avoid duplicates of filenames, when the midi file is uploaded, 
