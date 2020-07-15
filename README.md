@@ -3,7 +3,7 @@ The deployment of the Fourparts package on a site. \
 Link to site: https://fourparts.herokuapp.com
 
 To build project:
-```console
+```
 $ docker-compose build
 $ docker-compose up postgres
 ```
@@ -21,6 +21,11 @@ Python
 ```
 
 Local build is on https://localhost:8000
+
+To run tests:
+```
+$ docker-compose exec server pytest
+```
 
 ## Notes ##
 Currently, to avoid duplicates of filenames, when the midi file is uploaded, 
