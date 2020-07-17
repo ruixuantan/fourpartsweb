@@ -8,7 +8,7 @@ $ docker-compose build
 $ docker-compose up postgres
 ```
 
-To configure postgres, open up a new terminal while the image is running and enter:
+To configure postgres, open up a new terminal while the container is running and enter:
 ```
 $ docker-compose exec server python3
 Python
@@ -27,6 +27,8 @@ To run tests:
 $ docker-compose exec server pytest
 ```
 
+Midi samples can be found here: https://github.com/ruixuantan/FourParts/tree/master/samples
+
 ## Deployment ##
 ### Heroku ###
 Ensure set up of initial app and postgres add-on in Heroku. Add the heroku postgres db uri to instance.settings.py file. 
@@ -43,7 +45,7 @@ and original midi filename. This will then be used as the new filename of both m
 ## Extension ##
 1. Build a background job that checks the database every now and then.
 It checks if the files in the database exists.
-If the files do not exist (or 1 is missing), the job deletes the
+If the files do not exist (or 1 is missing), it deletes the
 entry in the database and both csv and midi files.
 
 2. Build a CLI package that abstracts away the need of manually setting up the database.
