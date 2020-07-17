@@ -15,6 +15,7 @@ py-midicsv==1.10.0
 # Database
 psycopg2==2.8.5
 Flask-SQLAlchemy==2.4.1
+marshmallow-sqlalchemy==0.23.1
 
 # API
 flask-marshmallow==0.13.0

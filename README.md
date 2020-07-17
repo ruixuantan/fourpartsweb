@@ -20,7 +20,7 @@ Python
 >>> db.create_all()
 ```
 
-Local build is on https://localhost:8000
+Local build is on http://localhost:8000
 
 To run tests:
 ```

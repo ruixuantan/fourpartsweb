@@ -2,13 +2,32 @@ from datetime import datetime
 from flask import current_app, jsonify, request, Response
 import os
 from werkzeug.utils import secure_filename
-
 import fourparts as fp
 import pandas as pd
 
 from fourpartsweb.api.v1 import V1FlaskView
 from fourpartsweb.blueprints.midifile.models import Midifile
 from fourpartsweb.extensions import db
+
+
+def _generate_hashed_filenames(filename):
+    if filename[:-4] == '.mid':
+        filename = filename[:-4]
+
+    hashed_filename = str(hash(filename + str(datetime.now())))
+    hashed_filename_mid = hashed_filename + '.mid'
+    hashed_filename_csv = hashed_filename + '.csv'
+
+    return hashed_filename_mid, hashed_filename_csv
+
+
+def _generate_results(midi_path, csv_path):
+    """Generates results of the analysed midi file.
+    """
+    df = fp.midi_to_df(midi_path)
+    chords = fp.get_chord_progression(df)
+    result = fp.ChordProgression(chords).check_parallels()
+    pd.DataFrame(result).to_csv(csv_path)
 
 
 class MidifileView(V1FlaskView):
@@ -25,9 +44,7 @@ class MidifileView(V1FlaskView):
             return response, 400
 
         filename_mid = secure_filename(filename_mid)
-        hashed_filename = str(hash(filename_mid[:-4] + str(datetime.now())))
-        hashed_filename_mid = hashed_filename + '.mid'
-        hashed_filename_csv = hashed_filename + '.csv'
+        hashed_filename_mid, hashed_filename_csv = _generate_hashed_filenames(filename_mid)
 
         midi_path = current_app.config["MIDISTORE_PATH"] + hashed_filename_mid
         csv_path = current_app.config["RESULTSTORE_PATH"] + hashed_filename_csv
@@ -36,15 +53,11 @@ class MidifileView(V1FlaskView):
         posted_file.save(os.path.join(midi_path))
 
         try:
-            df = fp.midi_to_df(midi_path)
-            chords = fp.get_chord_progression(df)
-            result = fp.ChordProgression(chords).check_parallels()
-            pd.DataFrame(result).to_csv(csv_path)
+            _generate_results(midi_path, csv_path)
 
         except:
             os.remove(midi_path)
-            response = jsonify({'error': 'an invalid midi file was uploaded'})
-            return response, 400
+            return jsonify({'error': 'an invalid midi file was uploaded'}), 400
 
         try:
             # save into db
@@ -57,7 +70,6 @@ class MidifileView(V1FlaskView):
         except:
             os.remove(midi_path)
             os.remove(csv_path)
-            response = jsonify({'error': 'an internal server error occured.'})
-            return response, 500
+            return jsonify({'error': 'an internal server error occured.'}), 500
 
         return jsonify(hashed_filename_csv), 200

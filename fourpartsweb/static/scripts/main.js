@@ -10,6 +10,10 @@ const statusBar = (msg, selector) => {
   } else if (selector === "SUCCESS") {
     $("#status-bar").text("Success!")
     $("#status-bar").css("background-color", "#4baf50")
+
+  } else if (selector === "CLEAR") {
+    $("#status-bar").text("")
+    $("#status-bar").css("background-color", "white")
   }
 }
 
@@ -20,6 +24,8 @@ const fileInput = () => {
 
     if (midifile.substr(midifile.length - 4) !== ".mid") {
       alert("Please upload .mid files only")
+      $("#midi-input").val(null)
+      statusBar("", "CLEAR")
     } else {
       statusBar(midifile, "READY")
     }
@@ -36,6 +42,7 @@ const fileUpload = () => {
 
     if (midifile == null) {
       alert("Upload a file first!")
+      statusBar("", "CLEAR")
       return null
     }
 
