@@ -17,7 +17,12 @@ const fileInput = () => {
   $("#midi-input").change((event) => {
     const midifile = event.target.files[0].name
     console.log(midifile)
-    statusBar(midifile, "READY")
+
+    if (midifile.substr(midifile.length - 4) !== ".mid") {
+      alert("Please upload .mid files only")
+    } else {
+      statusBar(midifile, "READY")
+    }
   })
 }
 
