@@ -1,5 +1,5 @@
 # Fourparts Web #
-The deployment of the Fourparts package on a site. \
+The deployment of the Fourparts package (https://github.com/ruixuantan/FourParts) on a site. \
 Link to site: https://fourparts.herokuapp.com
 
 To build project:
