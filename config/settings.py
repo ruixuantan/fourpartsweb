@@ -6,8 +6,9 @@ DEBUG = True
 SERVER_NAME = 'localhost:8000'
 SECRET_KEY = 'insecurekeydev'
 
-MIDISTORE_PATH = 'fourpartsweb/storage/midifiles/'
-RESULTSTORE_PATH = 'fourpartsweb/storage/results/'
+STORE_PATH = 'fourpartsweb/storage/'
+MIDISTORE_PATH = STORE_PATH + 'midifiles/'
+RESULTSTORE_PATH = STORE_PATH + 'results/'
 
 db_uri = 'postgresql://{0}:{1}@postgres:5432/{2}'.format(os.environ['POSTGRES_USER'],
                                                          os.environ['POSTGRES_PASSWORD'],

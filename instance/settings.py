@@ -1,10 +1,11 @@
 DEBUG = False
 
 SERVER_NAME = 'fourparts.herokuapp.com'
-SECRET_KEY = 'insecurekeydev'
+SECRET_KEY = 'insert secure key here'
 
-MIDISTORE_PATH = 'fourpartsweb/storage/midifiles/'
-RESULTSTORE_PATH = 'fourpartsweb/storage/results/'
+STORE_PATH = 'fourpartsweb/storage/'
+MIDISTORE_PATH = STORE_PATH + 'midifiles/'
+RESULTSTORE_PATH = STORE_PATH + 'results/'
 
 # USER
 # PASSWORD

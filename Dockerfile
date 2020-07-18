@@ -10,6 +10,7 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY . .
+RUN pip install --editable .
 RUN pip install packages/fourparts-0.0.1-py3-none-any.whl
 
 CMD gunicorn -c "python:config.gunicorn" "fourpartsweb.app:create_app()"

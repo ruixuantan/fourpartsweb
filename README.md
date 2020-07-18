@@ -4,20 +4,14 @@ Link to site: https://fourparts.herokuapp.com
 
 To build project:
 ```
+$ python3 setup.py bdist_wheel
 $ docker-compose build
 $ docker-compose up postgres
 ```
 
 To configure postgres, open up a new terminal while the container is running and enter:
 ```
-$ docker-compose exec server python3
-Python
->>> from fourpartsweb.extensions import db
->>> from fourpartsweb.app import create_app
->>> app = create_app()
->>> db.app = app
->>> db.drop_all()
->>> db.create_all()
+$ docker-compose run server fourpartsweb db init_db
 ```
 
 Local build is on http://localhost:8000
@@ -28,6 +22,11 @@ $ docker-compose exec server pytest
 ```
 
 Midi samples can be found here: https://github.com/ruixuantan/FourParts/tree/master/samples
+
+To gather midi files and csv files generated, run:
+```
+$ docker-compose run server fourpartsweb copyfiles copy --path <path_name>
+```
 
 ## Deployment ##
 ### Heroku ###
