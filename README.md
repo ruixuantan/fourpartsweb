@@ -11,7 +11,7 @@ $ docker-compose up postgres
 
 To configure postgres, open up a new terminal while the container is running and enter:
 ```
-$ docker-compose run server fourpartsweb db init_db
+$ docker-compose run server fourpartsweb db init
 ```
 
 Local build is on http://localhost:8000
@@ -26,6 +26,11 @@ Midi samples can be found here: https://github.com/ruixuantan/FourParts/tree/mas
 To gather midi files and csv files generated, run:
 ```
 $ docker-compose run server fourpartsweb copyfiles copy --path <path_name>
+```
+
+To delete storage files:
+```
+$ docker-compose run server fourpartsweb storage del-storage
 ```
 
 ## Deployment ##

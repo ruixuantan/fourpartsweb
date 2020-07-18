@@ -8,21 +8,25 @@ from fourpartsweb.extensions import db
 app = create_app()
 db.app = app
 
+
+def reset_db():
+    db.drop_all()
+    db.create_all()
+
+
 @click.group()
 def cli():
     pass
 
 
 @click.command()
-def init_db():
+def init():
     """Initialises the database.
     """
-
-    db.drop_all()
-    db.create_all()
-    click.echo("Database initialised.")
+    reset_db()
+    click.echo("Database initialised")
 
     return None
 
 
-cli.add_command(init_db)
+cli.add_command(init)

@@ -20,18 +20,14 @@ def create_app(settings_override=None):
     if settings_override:
         app.config.update(settings_override)
 
+    _create_storage_folders(app)
+
     app.register_blueprint(index)
     app.register_blueprint(download)
 
     extensions(app)
 
     MidifileView.register(app)
-
-    try: 
-        os.makedirs(app.config["MIDISTORE_PATH"])
-        os.makedirs(app.config["RESULTSTORE_PATH"])
-    except FileExistsError:
-        pass
 
     return app
 
@@ -42,3 +38,12 @@ def extensions(app):
     marshmallow.init_app(app)
 
     return None
+
+
+def _create_storage_folders(app):
+
+    try: 
+        os.makedirs(app.config["MIDISTORE_PATH"])
+        os.makedirs(app.config["RESULTSTORE_PATH"])
+    except FileExistsError:
+        pass
