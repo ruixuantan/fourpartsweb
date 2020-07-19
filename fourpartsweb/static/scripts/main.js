@@ -17,6 +17,7 @@ const statusBar = (msg, selector) => {
   }
 }
 
+
 const fileInput = () => {
   $("#midi-input").change((event) => {
     const midifile = event.target.files[0].name
@@ -32,9 +33,23 @@ const fileInput = () => {
   })
 }
 
+
+const downloadFile = (data, type, filename) => {
+  const blob = new Blob([data], { type: type })
+  const link = document.createElement('a')
+
+  link.href = window.URL.createObjectURL(blob)
+  link.download = filename
+
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+
 const fileUpload = () => {
 
-  $("button").click(() => {
+  $(".file-upload-btn").click(() => {
 
     let midifile = $("#midi-input")[0].files[0]
     const formData = new FormData()
@@ -52,9 +67,11 @@ const fileUpload = () => {
       data: formData,
       contentType: false,
       processData: false,
-      success: (res) => {
-        console.log(res)
-        location.href = '/download/' + res
+      async: false,
+      success: (data, textStatus, jqXHR) => {
+        downloadFile(data, 
+                     jqXHR.getResponseHeader('content-type'), 
+                     midifile.name.slice(0, -4) + ".csv")
         statusBar("", "SUCCESS")
       },
       error: (err) => {
@@ -68,7 +85,46 @@ const fileUpload = () => {
   })
 }
 
+
+const downloadStorage = () => {
+  $("#download-storage").click(() => {
+
+    const key = $("#download-key").val()
+    const data = {key: key}
+    console.log(data)
+
+    $.ajax({
+      url: '/api/v1/download/',
+      type: 'post',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      processData: false,
+      success: (data, textStatus, jqXHR) => {
+        console.log(this.response)
+        console.log(data)
+        console.log(textStatus)
+        console.log(jqXHR.getResponseHeader('content-disposition'))
+
+        const type = jqXHR.getResponseHeader('content-type')
+        console.log(type)
+
+        downloadFile(data, type, "storage.zip")
+
+        $("#download-status").text("Download completed.")
+      },
+      error: (data, textStatus, jqXHR) => {
+        console.log(data.getAllResponseHeaders())
+        console.log(textStatus)
+        console.log(jqXHR)
+        $("#download-status").text("Please check key entered.")
+      }
+    })
+  })
+}
+
+
 $(document).ready(() => {
   fileInput()
   fileUpload()
+  downloadStorage()
 })
