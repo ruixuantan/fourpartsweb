@@ -1,12 +1,10 @@
-import time
-import shutil
-import os
-
 from io import BytesIO
+import os
+import time
 import zipfile
 
 from fourpartsweb.api.v1 import V1FlaskView
-from flask import current_app, jsonify, request, Response, send_from_directory, send_file
+from flask import current_app, jsonify, request, send_file
 
 
 class DownloadView(V1FlaskView):
@@ -21,29 +19,18 @@ class DownloadView(V1FlaskView):
         if current_app.config['SECRET_KEY'] != data['key']:
             return jsonify({'error': 'invalid key'}), 401
 
-        print("SUCCESS NOWNOWNOW")
-
+        # python's zipfile library to zip a folder.
+        # Does not save the zipped folder.
         timestr = time.strftime("%Y%m%d-%H%M%S")
+        filename = "storage_{0}.zip".format(timestr)
+        memory_file = BytesIO()
+        file_path = current_app.config['STORE_PATH']
+        with zipfile.ZipFile(memory_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for root, dirs, files in os.walk(file_path):
+                for file in files:
+                    zipf.write(os.path.join(root, file))
 
-        filename = "storage_files"
-        file_path = 'storage/results/'
-
-        shutil.make_archive('fourpartsweb/storage/' + filename,
-                            'zip',
-                            'fourpartsweb/storage/')
-        
-        return send_from_directory("storage/", filename + ".zip", as_attachment=True)
-
-
-        # timestr = time.strftime("%Y%m%d-%H%M%S")
-        # fileName = "my_data_dump_{}.zip".format(timestr)
-        # memory_file = BytesIO()
-        # file_path = 'storage/midifiles/'
-        # with zipfile.ZipFile(memory_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        #     for root, dirs, files in os.walk(file_path):
-        #                 for file in files:
-        #                         zipf.write(os.path.join(root, file))
-        # memory_file.seek(0)
-        # return send_file(memory_file,
-        #                 attachment_filename=fileName,
-        #                 as_attachment=True)
+        memory_file.seek(0)
+        return send_file(memory_file,
+                         attachment_filename=filename,
+                         as_attachment=True)
