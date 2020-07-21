@@ -13,7 +13,8 @@ def app():
         'TESTING': True,
         'SQLALCHEMY_DATABASE_URI': db_uri,
         'MIDISTORE_PATH': settings.MIDISTORE_PATH,
-        'RESULTSTORE_PATH': settings.RESULTSTORE_PATH
+        'PARALLEL_RESULTS_PATH': settings.PARALLEL_RESULTS_PATH,
+        'CHORD_RESULTS_PATH': settings.CHORD_RESULTS_PATH
     }
 
     _app = create_app(settings_override=params)

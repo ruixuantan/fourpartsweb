@@ -76,7 +76,7 @@ def _zip_results(file_collection):
         zipf.write(file_collection.parallels_path, 
                    'parallels.csv')
         zipf.write(file_collection.chords_path, 
-                   'results.csv')
+                   'chords.csv')
     
     memory_file.seek(0)
     return memory_file

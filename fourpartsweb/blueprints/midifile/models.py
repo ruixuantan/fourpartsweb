@@ -14,5 +14,7 @@ class Midifile(db.Model):
     chords_string = db.Column(db.String(), unique=True)
 
     def __repr__(self):
-        return "<Midi: {0}, Csv: {1}>" \
-                .format(self.midi_string, self.csv_string)
+        return "<Midi: {0}, Parallels: {1}, Chords: {2}>" \
+                .format(self.midi_string, 
+                        self.parallels_string, 
+                        self.chords_string)
