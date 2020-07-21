@@ -24,7 +24,7 @@ def _generate_results(file_collection):
     try:
         df = fp.midi_to_df(file_collection.midi_path)
         chords = fp.get_chord_progression(df)
-        chord_progression =fp.ChordProgression(chords)
+        chord_progression = fp.ChordProgression(chords)
 
         result = chord_progression.check_parallels()
         pd.DataFrame(result).to_csv(file_collection.parallels_path)
@@ -33,7 +33,7 @@ def _generate_results(file_collection):
         pd.DataFrame(pitch_class_sets).to_csv(file_collection.chords_path)
 
     except:
-        os.remove(midi_path)
+        os.remove(file_collection.midi_path)
         return False
 
     return True
@@ -108,8 +108,9 @@ class MidifileView(V1FlaskView):
 
         if not _db_commit(file_collection):
             return jsonify({'error': 'an internal server error occured.'}), 500
-
+        
         try:
+            
             zip_file = _zip_results(file_collection)
             filename = "results_{0}.zip".format(get_time_string())
             return send_file(zip_file,
