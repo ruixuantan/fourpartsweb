@@ -4,6 +4,7 @@ import os
 from fourpartsweb.blueprints.index import index
 from fourpartsweb.blueprints.download import download
 from fourpartsweb.api.v1.midifile import MidifileView
+from fourpartsweb.api.v1.download import DownloadView
 
 from fourpartsweb.extensions import (
     debug_toolbar,
@@ -28,6 +29,7 @@ def create_app(settings_override=None):
     extensions(app)
 
     MidifileView.register(app)
+    DownloadView.register(app)
 
     return app
 

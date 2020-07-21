@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import current_app, jsonify, request, Response
+from flask import current_app, jsonify, request, send_from_directory
 import os
 from werkzeug.utils import secure_filename
 import fourparts as fp
@@ -72,4 +72,6 @@ class MidifileView(V1FlaskView):
             os.remove(csv_path)
             return jsonify({'error': 'an internal server error occured.'}), 500
 
-        return jsonify(hashed_filename_csv), 200
+        return send_from_directory("storage/results/", 
+                                    hashed_filename_csv, 
+                                    as_attachment=True)
