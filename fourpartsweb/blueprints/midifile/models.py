@@ -10,7 +10,8 @@ class Midifile(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     midi_string = db.Column(db.String(), unique=True)
-    csv_string = db.Column(db.String(), unique=True)
+    parallels_string = db.Column(db.String(), unique=True)
+    chords_string = db.Column(db.String(), unique=True)
 
     def __repr__(self):
         return "<Midi: {0}, Csv: {1}>" \

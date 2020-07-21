@@ -20,16 +20,10 @@ def del_storage(del_db):
     """Deletes all midi and csv files in storage.
     """
 
-    midi_path = app.config['MIDISTORE_PATH']
-    csv_path = app.config['RESULTSTORE_PATH']
-    midi_files = os.listdir(midi_path) 
-    csv_files = os.listdir(csv_path)
-
-    for m in midi_files:
-        os.remove(midi_path + m)
-    
-    for c in csv_files:
-        os.remove(csv_path + c)
+    store_path = app.config['STORE_PATH']
+    for root, dirs, files in os.walk(store_path):
+        for file in files:
+            os.remove(os.path.join(root, file))
 
     click.echo("All files in storage deleted")
 

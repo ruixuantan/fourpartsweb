@@ -46,6 +46,7 @@ def _create_storage_folders(app):
 
     try: 
         os.makedirs(app.config["MIDISTORE_PATH"])
-        os.makedirs(app.config["RESULTSTORE_PATH"])
+        os.makedirs(app.config["PARALLEL_RESULTS_PATH"])
+        os.makedirs(app.config["CHORD_RESULTS_PATH"])
     except FileExistsError:
         pass

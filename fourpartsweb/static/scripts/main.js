@@ -1,3 +1,47 @@
+const ajaxConfig = () => {
+  $.ajaxTransport("+binary", function (options, originalOptions, jqXHR) {
+    // check for conditions and support for blob / arraybuffer response type
+    if (window.FormData && ((options.dataType && (options.dataType == 'binary')) || (options.data && ((window.ArrayBuffer && options.data instanceof ArrayBuffer) || (window.Blob && options.data instanceof Blob))))) {
+      return {
+        // create new XMLHttpRequest
+        send: function (headers, callback) {
+          // setup all variables
+          var xhr = new XMLHttpRequest(),
+          url = options.url,
+          type = options.type,
+          async = options.async || true,
+          // blob or arraybuffer. Default is blob
+          dataType = options.responseType || "blob",
+          data = options.data || null,
+          username = options.username || null,
+          password = options.password || null;
+
+          xhr.addEventListener('load', function () {
+            var data = {};
+            data[options.dataType] = xhr.response;
+            // make callback and send data
+            callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+          });
+
+          xhr.open(type, url, async, username, password);
+
+          // setup custom headers
+          for (var i in headers) {
+            xhr.setRequestHeader(i, headers[i]);
+          }
+
+          xhr.responseType = dataType;
+          xhr.send(data);
+        },
+        abort: function () {
+          jqXHR.abort();
+        }
+      };
+    }
+  });
+}
+
+
 const statusBar = (msg, selector) => {
   if (selector === "READY") {
     $("#status-bar").text(msg + " ready.")
@@ -8,7 +52,7 @@ const statusBar = (msg, selector) => {
     $("#status-bar").css("background-color", "red")
 
   } else if (selector === "SUCCESS") {
-    $("#status-bar").text("Success!")
+    $("#status-bar").text(msg + "Success!")
     $("#status-bar").css("background-color", "#4baf50")
 
   } else if (selector === "CLEAR") {
@@ -66,16 +110,19 @@ const fileUpload = () => {
       return null
     }
 
+    ajaxConfig()
+
     return $.ajax({
       url: '/api/v1/midifile/',
       type: 'post',
       data: formData,
       contentType: false,
       processData: false,
+      dataType: 'binary',
       success: (data, textStatus, jqXHR) => {
         downloadFile(data, 
                      jqXHR.getResponseHeader("content-type"), 
-                     midifile.name.slice(0, -4) + ".csv")
+                     midifile.name.slice(0, -4) + ".zip")
         statusBar("", "SUCCESS")
         clearMidi()
       },
@@ -86,50 +133,6 @@ const fileUpload = () => {
       }
     })
   })
-}
-
-
-const ajaxConfig = () => {
-  $.ajaxTransport("+binary", function (options, originalOptions, jqXHR) {
-    // check for conditions and support for blob / arraybuffer response type
-    if (window.FormData && ((options.dataType && (options.dataType == 'binary')) || (options.data && ((window.ArrayBuffer && options.data instanceof ArrayBuffer) || (window.Blob && options.data instanceof Blob))))) {
-      return {
-        // create new XMLHttpRequest
-        send: function (headers, callback) {
-          // setup all variables
-          var xhr = new XMLHttpRequest(),
-          url = options.url,
-          type = options.type,
-          async = options.async || true,
-          // blob or arraybuffer. Default is blob
-          dataType = options.responseType || "blob",
-          data = options.data || null,
-          username = options.username || null,
-          password = options.password || null;
-
-          xhr.addEventListener('load', function () {
-            var data = {};
-            data[options.dataType] = xhr.response;
-            // make callback and send data
-            callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
-          });
-
-          xhr.open(type, url, async, username, password);
-
-          // setup custom headers
-          for (var i in headers) {
-            xhr.setRequestHeader(i, headers[i]);
-          }
-
-          xhr.responseType = dataType;
-          xhr.send(data);
-        },
-        abort: function () {
-          jqXHR.abort();
-        }
-      };
-    }
-  });
 }
 
 

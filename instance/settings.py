@@ -5,7 +5,8 @@ SECRET_KEY = 'insert secure key here'
 
 STORE_PATH = 'fourpartsweb/storage/'
 MIDISTORE_PATH = STORE_PATH + 'midifiles/'
-RESULTSTORE_PATH = STORE_PATH + 'results/'
+PARALLEL_RESULTS_PATH = STORE_PATH + 'parallel_results/'
+CHORD_RESULTS_PATH = STORE_PATH + 'chord_results/'
 
 # USER
 # PASSWORD

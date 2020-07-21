@@ -2,19 +2,20 @@
 
 {% block body %}
 <div class="container">
-  <div class="row" id="uploadContainer">
+  <div class="row">
     <div class="file-upload">
-      <!-- Upload button -->
+
+      <!-- Upload buttons -->
       <button
         class="file-upload-btn" 
         type="button">Upload</button>
 
       <!-- File input -->
-      <div class="midi-upload-wrap">
+      <div class="file-upload-midi-wrap">
         <input
           id="midi-input"
-          class="file-upload-input" type='file' accept=".mid" />
-        <div class="drag-text">
+          class="file-upload-midi-input" type='file' accept=".mid" />
+        <div class="file-upload-midi-drag-text">
           <h3>Drag and drop a midi file or click to select</h3>
         </div>
       </div>
