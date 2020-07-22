@@ -1,4 +1,3 @@
-import os
 from flask import Blueprint, render_template, send_from_directory, jsonify
 
 
@@ -12,9 +11,9 @@ def download_all():
 
 @download.route('/download/sample/')
 def download_sample():
-    try: 
+    try:
         return send_from_directory('static/sample/',
-                                   'chorale_F.zip', 
+                                   'chorale_F.zip',
                                    as_attachment=True)
-    except:
+    except FileNotFoundError:
         return jsonify({'error': 'sample files not available'}), 500

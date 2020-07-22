@@ -6,6 +6,7 @@ pytz==2020.1
 six==1.15.0
 pytest==5.4.3
 requests==2.24.0
+flake8==3.8.3
 
 # Fourparts dependencies
 numpy==1.19.0

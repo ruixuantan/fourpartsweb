@@ -53,4 +53,3 @@ def _create_storage_folders(app):
     _create_folder(app.config["MIDISTORE_PATH"])
     _create_folder(app.config["PARALLEL_RESULTS_PATH"])
     _create_folder(app.config["CHORD_RESULTS_PATH"])
-

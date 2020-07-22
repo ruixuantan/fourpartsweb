@@ -32,7 +32,7 @@ def _generate_results(file_collection):
         pitch_class_sets = chord_progression.get_pitch_class_sets()
         pd.DataFrame(pitch_class_sets).to_csv(file_collection.chords_path)
 
-    except:
+    except Exception:
         os.remove(file_collection.midi_path)
         return False
 
@@ -57,7 +57,7 @@ def _db_commit(file_collection):
         db.session.add(midifile)
         db.session.commit()
 
-    except:
+    except Exception:
         os.remove(file_collection.midi_path)
         os.remove(file_collection.parallels_path)
         os.remove(file_collection.chords_path)
@@ -73,11 +73,11 @@ def _zip_results(file_collection):
     memory_file = BytesIO()
 
     with ZipFile(memory_file, 'w') as zipf:
-        zipf.write(file_collection.parallels_path, 
+        zipf.write(file_collection.parallels_path,
                    'parallels.csv')
-        zipf.write(file_collection.chords_path, 
+        zipf.write(file_collection.chords_path,
                    'chords.csv')
-    
+
     memory_file.seek(0)
     return memory_file
 
@@ -108,13 +108,13 @@ class MidifileView(V1FlaskView):
 
         if not _db_commit(file_collection):
             return jsonify({'error': 'an internal server error occured.'}), 500
-        
+
         try:
-            
+
             zip_file = _zip_results(file_collection)
             filename = "results_{0}.zip".format(get_time_string())
             return send_file(zip_file,
                              attachment_filename=filename,
                              as_attachment=True)
-        except:
+        except FileNotFoundError:
             return jsonify({'error': 'file is not properly zipped in server.'}), 500

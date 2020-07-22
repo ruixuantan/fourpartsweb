@@ -21,13 +21,12 @@ class CLI(click.MultiCommand):
 
     def get_command(self, ctx, name):
         ns = {}
-        
         filename = os.path.join(cmd_folder, cmd_prefix + name + '.py')
 
         with open(filename) as f:
             code = compile(f.read(), filename, 'exec')
             eval(code, ns, ns)
-            
+
         return ns['cli']
 
 

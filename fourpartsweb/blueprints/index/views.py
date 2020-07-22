@@ -1,5 +1,4 @@
-import os
-from flask import Blueprint, render_template, send_from_directory
+from flask import Blueprint, render_template
 
 
 index = Blueprint('index', __name__, template_folder='templates')

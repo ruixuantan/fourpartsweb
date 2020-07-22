@@ -1,5 +1,6 @@
 from fourpartsweb.extensions import db
 
+
 class Midifile(db.Model):
     """No storing of midi file in database.
     Store a string instead, which points towards the
@@ -15,6 +16,6 @@ class Midifile(db.Model):
 
     def __repr__(self):
         return "<Midi: {0}, Parallels: {1}, Chords: {2}>" \
-                .format(self.midi_string, 
-                        self.parallels_string, 
+                .format(self.midi_string,
+                        self.parallels_string,
                         self.chords_string)

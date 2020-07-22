@@ -1,6 +1,5 @@
 from io import BytesIO
 import os
-import time
 from zipfile import ZipFile, ZIP_DEFLATED
 
 from fourpartsweb.api.v1 import V1FlaskView
@@ -36,7 +35,7 @@ class DownloadView(V1FlaskView):
         # Does not save the zipped folder.
         filename = "storage_{0}.zip".format(get_time_string())
         zip_file = _zip_storage_folder()
-        
+
         return send_file(zip_file,
                          attachment_filename=filename,
                          as_attachment=True)

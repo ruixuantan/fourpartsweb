@@ -2,8 +2,8 @@ from utils.utils import get_time_string
 
 
 def _generate_hashed_filenames(filename):
-    """Generates the hashed filenames of the midifile and results csv files. 
-    
+    """Generates the hashed filenames of the midifile and results csv files.
+
     Parameters
     ----------
     filename : str
@@ -27,7 +27,7 @@ def _generate_hashed_filenames(filename):
 
 
 class FileCollection:
-    """A DataStructure that holds the midifile and 
+    """A DataStructure that holds the midifile and
     its associated analysed result files.
 
     Parameters
@@ -55,7 +55,7 @@ class FileCollection:
         self.chords_path = chords_path
 
     @classmethod
-    def generate_file_collection(cls, midifile, 
+    def generate_file_collection(cls, midifile,
                                  midi_path, parallels_path, chords_path):
         """Constructor method for FileCollection.
 
@@ -84,4 +84,3 @@ class FileCollection:
                    midi_path + hashed_mid,
                    parallels_path + hashed_parallels_csv,
                    chords_path + hashed_chords_csv)
-

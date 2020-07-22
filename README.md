@@ -18,9 +18,10 @@ Local build is on http://localhost:8000 \
 Midi samples can be found here: https://github.com/ruixuantan/FourParts/tree/master/samples
 
 ## CLI ##
-To run tests:
+To run tests and flake8:
 ```
 $ docker-compose exec server pytest
+$ docker-compose exec server flake8
 ```
 
 To delete storage files:

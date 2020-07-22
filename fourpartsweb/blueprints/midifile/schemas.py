@@ -1,13 +1,13 @@
-from marshmallow import fields, validate
+from marshmallow import fields
 
 from fourpartsweb.extensions import marshmallow
 
 
 class MidifileSchema(marshmallow.Schema):
     class Meta:
-        fields = ('id', 
-                  'midi_string', 
-                  'parallels_string', 
+        fields = ('id',
+                  'midi_string',
+                  'parallels_string',
                   'chords_string')
 
 
