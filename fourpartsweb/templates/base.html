@@ -28,6 +28,7 @@
       rel="manifest" 
       href="{{ url_for('static', filename='images/manifest.json') }}" />
 
+    <noscript>Your browser does not support JavaScript!</noscript>
   </head>
   <body>
     <!-- Heading -->
@@ -66,12 +67,15 @@
 
             <!-- Content -->
             <h5 class="font-weight-bold text-uppercase mt-3 mb-4">About</h5>
-            <p style="text-align:justify;"> A project to analyse Bach Chorales. Currently, it can check the presence of
-              parallel 5ths and 8ths. Future implementations of possibly: detection of 
-              cadences, labelling of chords, generation of bach chorales. How it works: 
+            <p style="text-align:justify;"> A project to analyse Bach Chorales. 
+              Currently, it can check the presence of parallel 5ths and 8ths and 
+              identify the Pitch Class Set of the chords. 
+              Future implementations of possibly: 
+              detection of cadences, generation of Bach Chorales. How it works: 
               At every instance when there are 4 'on' note events, a 'chord' is formed. 
-              These chords will then be used to check for parallels between them.
-              <i>When uploading the midi file, ensure that is has strictly only 4 parts.</i></p>
+              These chords will then be passed into the FourParts package and analysed.
+              <i>When uploading the midi file, ensure that is has strictly only 4 parts.</i>
+              Click <u><a href="/download/sample/">HERE</a></u> for a sample.</p>
 
           </div>
           <!-- Grid column -->

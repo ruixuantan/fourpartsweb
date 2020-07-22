@@ -42,10 +42,15 @@ def extensions(app):
     return None
 
 
-def _create_storage_folders(app):
-
-    try: 
-        os.makedirs(app.config["MIDISTORE_PATH"])
-        os.makedirs(app.config["RESULTSTORE_PATH"])
+def _create_folder(path):
+    try:
+        os.makedirs(path)
     except FileExistsError:
         pass
+
+
+def _create_storage_folders(app):
+    _create_folder(app.config["MIDISTORE_PATH"])
+    _create_folder(app.config["PARALLEL_RESULTS_PATH"])
+    _create_folder(app.config["CHORD_RESULTS_PATH"])
+

@@ -1,33 +1,85 @@
-from datetime import datetime
-from flask import current_app, jsonify, request, send_from_directory
-import os
-from werkzeug.utils import secure_filename
+from flask import current_app, jsonify, request, send_file
 import fourparts as fp
+from io import BytesIO
+import os
 import pandas as pd
+from werkzeug.utils import secure_filename
+from zipfile import ZipFile
 
 from fourpartsweb.api.v1 import V1FlaskView
 from fourpartsweb.blueprints.midifile.models import Midifile
 from fourpartsweb.extensions import db
+from utils import get_time_string, FileCollection
 
 
-def _generate_hashed_filenames(filename):
-    if filename[:-4] == '.mid':
-        filename = filename[:-4]
-
-    hashed_filename = str(hash(filename + str(datetime.now())))
-    hashed_filename_mid = hashed_filename + '.mid'
-    hashed_filename_csv = hashed_filename + '.csv'
-
-    return hashed_filename_mid, hashed_filename_csv
-
-
-def _generate_results(midi_path, csv_path):
+def _generate_results(file_collection):
     """Generates results of the analysed midi file.
+
+    Returns
+    -------
+    bool
+        Returns True if there are no errors in the analysis.
     """
-    df = fp.midi_to_df(midi_path)
-    chords = fp.get_chord_progression(df)
-    result = fp.ChordProgression(chords).check_parallels()
-    pd.DataFrame(result).to_csv(csv_path)
+
+    try:
+        df = fp.midi_to_df(file_collection.midi_path)
+        chords = fp.get_chord_progression(df)
+        chord_progression = fp.ChordProgression(chords)
+
+        result = chord_progression.check_parallels()
+        pd.DataFrame(result).to_csv(file_collection.parallels_path)
+
+        pitch_class_sets = chord_progression.get_pitch_class_sets()
+        pd.DataFrame(pitch_class_sets).to_csv(file_collection.chords_path)
+
+    except:
+        os.remove(file_collection.midi_path)
+        return False
+
+    return True
+
+
+def _db_commit(file_collection):
+    """Saves string of midi file and generated csv files into db.
+
+    Returns
+    -------
+    bool
+        Returns True if there are no errors in the saving.
+    """
+
+    try:
+        # save into db
+        midifile = Midifile()
+        midifile.midi_string = file_collection.midifile
+        midifile.parallels_string = file_collection.parallels_result
+        midifile.chords_string = file_collection.chords_result
+        db.session.add(midifile)
+        db.session.commit()
+
+    except:
+        os.remove(file_collection.midi_path)
+        os.remove(file_collection.parallels_path)
+        os.remove(file_collection.chords_path)
+        return False
+
+    return True
+
+
+def _zip_results(file_collection):
+    """Zips the parallel and chord analysis csv files.
+    """
+
+    memory_file = BytesIO()
+
+    with ZipFile(memory_file, 'w') as zipf:
+        zipf.write(file_collection.parallels_path, 
+                   'parallels.csv')
+        zipf.write(file_collection.chords_path, 
+                   'chords.csv')
+    
+    memory_file.seek(0)
+    return memory_file
 
 
 class MidifileView(V1FlaskView):
@@ -44,34 +96,25 @@ class MidifileView(V1FlaskView):
             return response, 400
 
         filename_mid = secure_filename(filename_mid)
-        hashed_filename_mid, hashed_filename_csv = _generate_hashed_filenames(filename_mid)
-
-        midi_path = current_app.config["MIDISTORE_PATH"] + hashed_filename_mid
-        csv_path = current_app.config["RESULTSTORE_PATH"] + hashed_filename_csv
-
+        file_collection = FileCollection.generate_file_collection(filename_mid,
+                                                                  current_app.config['MIDISTORE_PATH'],
+                                                                  current_app.config['PARALLEL_RESULTS_PATH'],
+                                                                  current_app.config['CHORD_RESULTS_PATH'])
         # save midifile
-        posted_file.save(os.path.join(midi_path))
+        posted_file.save(os.path.join(file_collection.midi_path))
 
-        try:
-            _generate_results(midi_path, csv_path)
-
-        except:
-            os.remove(midi_path)
+        if not _generate_results(file_collection):
             return jsonify({'error': 'an invalid midi file was uploaded'}), 400
 
-        try:
-            # save into db
-            midifile = Midifile()
-            midifile.midi_string = hashed_filename_mid
-            midifile.csv_string = hashed_filename_csv
-            db.session.add(midifile)
-            db.session.commit()
-
-        except:
-            os.remove(midi_path)
-            os.remove(csv_path)
+        if not _db_commit(file_collection):
             return jsonify({'error': 'an internal server error occured.'}), 500
-
-        return send_from_directory("storage/results/", 
-                                    hashed_filename_csv, 
-                                    as_attachment=True)
+        
+        try:
+            
+            zip_file = _zip_results(file_collection)
+            filename = "results_{0}.zip".format(get_time_string())
+            return send_file(zip_file,
+                             attachment_filename=filename,
+                             as_attachment=True)
+        except:
+            return jsonify({'error': 'file is not properly zipped in server.'}), 500

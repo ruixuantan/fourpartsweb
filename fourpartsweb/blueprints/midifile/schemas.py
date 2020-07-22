@@ -5,7 +5,10 @@ from fourpartsweb.extensions import marshmallow
 
 class MidifileSchema(marshmallow.Schema):
     class Meta:
-        fields = ('id', 'midistring', 'resultstring')
+        fields = ('id', 
+                  'midi_string', 
+                  'parallels_string', 
+                  'chords_string')
 
 
 class UploadMidifileSchema(marshmallow.Schema):

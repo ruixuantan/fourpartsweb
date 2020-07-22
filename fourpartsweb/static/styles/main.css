@@ -21,6 +21,7 @@ h1,h2,h3,h4,h5,h6 {
     background: #575757;
     border: none;
     padding: 10px;
+    margin: 1px;
     border-radius: 4px;
     border-bottom: 4px solid #474747;
     transition: all .2s ease;
@@ -46,7 +47,7 @@ h1,h2,h3,h4,h5,h6 {
     text-align: center;
 }
 
-.file-upload-input {
+.file-upload-midi-input {
     position: absolute;
     margin: 0;
     padding: 0;
@@ -57,23 +58,23 @@ h1,h2,h3,h4,h5,h6 {
     cursor: pointer;
 }
 
-.midi-upload-wrap {
+.file-upload-midi-wrap {
     margin-top: 20px;
     border: 4px dashed #575757;
     position: relative;
 }
 
 .midi-dropping,
-.midi-upload-wrap:hover {
+.file-upload-midi-wrap:hover {
     background-color: #929292;
     border: 4px dashed #ffffff;
 }
 
-.drag-text {
+.file-upload-midi-drag-text {
     text-align: center;
 }
 
-.drag-text h3 {
+.file-upload-midi-drag-text h3 {
     font-weight: 100;
     text-transform: uppercase;
     color: #474747;
@@ -91,8 +92,4 @@ h1,h2,h3,h4,h5,h6 {
 .download-wrap {
     display: inline;
     text-align: center;
-}
-
-#download-storage {
-    margin-top: 5px;
 }
