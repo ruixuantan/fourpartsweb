@@ -31,7 +31,8 @@ $ docker-compose run server fourpartsweb storage del-storage
 
 ## Deployment ##
 ### Heroku ###
-Ensure set up of initial app and postgres add-on in Heroku. Add the secret key and heroku postgres db uri to instance.settings.py file. 
+Ensure set up of initial app and postgres add-on in Heroku. 
+Add 1.the secret key, 2.heroku postgres db uri, 3.redis key to instance.settings.py file. 
 
 In app.py, change `app.config.from_object('config.settings')` to `app.config.from_object('instance.settings')`
 
@@ -41,9 +42,3 @@ In Dockerfile and docker-compose.yml, change the command to `gunicorn "fourparts
 Currently, to avoid duplicates of filenames, when the midi file is uploaded, 
 a python hash is generated from the concatenated string of the current datetime object
 and original midi filename. This will then be used as the new filename of both midi and csv files.
-
-## Extension ##
-1. Build a background job that checks the database every now and then.
-It checks if the files in the database exists.
-If the files do not exist (or 1 is missing), it deletes the
-entry in the database and both csv and midi files.

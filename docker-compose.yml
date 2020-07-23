@@ -2,6 +2,14 @@ version: '3'
 
 services:
 
+  redis:
+    image: 'redis:6.0-alpine'
+    command: redis-server --requirepass passworddev
+    volumes:
+      - 'redis:/var/lib/redis/data'
+    ports:
+      - '6379:6379'
+
   postgres:
     env_file:
       - ".env"
@@ -24,6 +32,15 @@ services:
     volumes:
       - ".:/fourpartsweb"
 
+  celery:
+    build: .
+    command: celery worker -l info -A fourpartsweb.blueprints.midifile.tasks -B
+    env_file:
+      - '.env'
+    volumes:
+      - '.:/fourpartsweb'
+
 volumes:
   postgres: {}
+  redis:
         

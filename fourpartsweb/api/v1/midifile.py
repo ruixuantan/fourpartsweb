@@ -9,7 +9,7 @@ from zipfile import ZipFile
 from fourpartsweb.api.v1 import V1FlaskView
 from fourpartsweb.blueprints.midifile.models import Midifile
 from fourpartsweb.extensions import db
-from utils import get_time_string, FileCollection
+from utils import get_time_string, delete_file, FileCollection
 
 
 def _generate_results(file_collection):
@@ -33,7 +33,7 @@ def _generate_results(file_collection):
         pd.DataFrame(pitch_class_sets).to_csv(file_collection.chords_path)
 
     except Exception:
-        os.remove(file_collection.midi_path)
+        delete_file(file_collection.midi_path)
         return False
 
     return True
@@ -58,9 +58,9 @@ def _db_commit(file_collection):
         db.session.commit()
 
     except Exception:
-        os.remove(file_collection.midi_path)
-        os.remove(file_collection.parallels_path)
-        os.remove(file_collection.chords_path)
+        delete_file(file_collection.midi_path)
+        delete_file(file_collection.parallels_path)
+        delete_file(file_collection.chords_path)
         return False
 
     return True
@@ -112,7 +112,7 @@ class MidifileView(V1FlaskView):
         try:
 
             zip_file = _zip_results(file_collection)
-            filename = "results_{0}.zip".format(get_time_string())
+            filename = "results_{}.zip".format(get_time_string())
             return send_file(zip_file,
                              attachment_filename=filename,
                              as_attachment=True)
