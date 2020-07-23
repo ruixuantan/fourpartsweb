@@ -16,3 +16,20 @@ db_uri = 'postgresql://{0}:{1}@postgres:5432/{2}'.format(os.environ['POSTGRES_US
                                                          os.environ['POSTGRES_DB'])
 SQLALCHEMY_DATABASE_URI = db_uri
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# Celery.
+REDIS_PASSWORD = 'passworddev'
+CELERY_BROKER_URL = 'redis://:{}@redis:6379/0'.format(REDIS_PASSWORD)
+CELERY_RESULT_BACKEND = 'redis://:{}@redis:6379/0'.format(REDIS_PASSWORD)
+CELERY_REDIS_MAX_CONNECTIONS = 5
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERYBEAT_SCHEDULE = {
+    # Executes every 10s
+    'clean_db-every-10s': {
+        'task': 'clean_db',
+        'schedule': 10
+    }
+}

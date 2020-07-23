@@ -34,3 +34,7 @@ gunicorn==19.10.0
 
 # Extensions
 flask-debugtoolbar==0.10.0
+
+# Background workers
+redis==3.5.3
+celery==4.4.6
