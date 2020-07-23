@@ -31,7 +31,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 CELERYBEAT_SCHEDULE = {
     # Executes every 10s
-    'clean_db-every-10s': {
+    'clean_db-every-month': {
         'task': 'clean_db',
         'schedule': crontab(0, 0, day_of_month='1')
     }

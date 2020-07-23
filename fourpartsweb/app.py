@@ -1,8 +1,5 @@
 from flask import Flask
 from celery import Celery
-from celery.schedules import crontab
-from celery.utils.log import get_task_logger
-from datetime import timedelta
 import os
 
 from fourpartsweb.blueprints.index import index
