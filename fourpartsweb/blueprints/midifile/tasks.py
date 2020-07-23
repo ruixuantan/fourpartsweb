@@ -52,10 +52,11 @@ def _delete_files(f):
 
 @celery.task(name="clean_db")
 def clean_db():
-    """Every month, iterate through the database and 
+    """Every month, iterate through the database and
     checks if all files are present. If not, delete all
     the database entry and all associated files.
     """
+
     files = Midifile.query.all()
     for f in files:
         if not _check_presence(f):
