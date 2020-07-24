@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div>
+  <!-- Results -->
+  <div class="row justify-content-center" style="max-width: 600px;">
+    <div class="col-3">Pitch Class:</div>
+    <div class="col-3" id="result-pitch-class-set"></div>
+    <div class="col-3">Name:</div>
+    <div class="col-3" id="result-pitch-class-name"></div>
+  </div>
+  <!-- Results -->
+
+  <!-- Pitch Class Set Form -->
+  <form id="pitch-class-set-form">
+    <label><input type="checkbox" value="0" id="pitch-class-set-0">C</label>
+    <label><input type="checkbox" value="1" id="pitch-class-set-1">C#/Db</label>
+    <label><input type="checkbox" value="2" id="pitch-class-set-2">D</label>
+    <label><input type="checkbox" value="3" id="pitch-class-set-3">D#/Eb</label>
+    <label><input type="checkbox" value="4" id="pitch-class-set-4">E</label>
+    <label><input type="checkbox" value="5" id="pitch-class-set-5">F</label>
+    <label><input type="checkbox" value="6" id="pitch-class-set-6">F#/Gb</label>
+    <label><input type="checkbox" value="7" id="pitch-class-set-7">G</label>
+    <label><input type="checkbox" value="8" id="pitch-class-set-8">G#/Ab</label>
+    <label><input type="checkbox" value="9" id="pitch-class-set-9">A</label>
+    <label><input type="checkbox" value="10" id="pitch-class-set-10">A#/Bb</label>
+    <label><input type="checkbox" value="11" id="pitch-class-set-11">B</label>
+    <br>
+    <button id="pitch-class-set-button" type="button" class="btn btn-outline-primary">Get Results</button>
+    <button id="pitch-class-set-clear" type="button" class="btn btn-outline-danger">Clear</button>
+  </form>
+
+</div>
+{% endblock %}

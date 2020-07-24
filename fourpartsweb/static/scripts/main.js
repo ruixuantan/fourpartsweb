@@ -183,7 +183,12 @@ const getPitchClassSet = () => {
       data: JSON.stringify({notes: notes}),
       contentType: 'application/json',
       success: (data) => {
-        console.log(data)
+        if (data.hasOwnProperty("error")) {
+          $("#result-pitch-class-set").text(data.error)
+        } else {
+          $("#result-pitch-class-set").text(data.pitches)
+          $("#result-pitch-class-name").text(data.name)
+        }
       },
       error: (err) => {
         console.log(err)
