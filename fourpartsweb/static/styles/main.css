@@ -92,3 +92,8 @@ h1,h2,h3,h4,h5,h6 {
 .download-wrap {
     text-align: center;
 }
+
+/* Pitchclass table */
+.pitch-class-set-form-table td {
+    text-align: center;
+}

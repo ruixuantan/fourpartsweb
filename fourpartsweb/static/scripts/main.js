@@ -184,7 +184,7 @@ const getPitchClassSet = () => {
       contentType: 'application/json',
       success: (data) => {
         if (data.hasOwnProperty("error")) {
-          $("#result-pitch-class-set").text(data.error)
+          alert(data.error)
         } else {
           $("#result-pitch-class-set").text(data.pitches)
           $("#result-pitch-class-name").text(data.name)
@@ -204,6 +204,8 @@ const clearPitchClassSet = () => {
     for (let i=0; i<12; i++) {
       $note = $("#pitch-class-set-"+i)
       $note.prop('checked', false)
+      $("#result-pitch-class-set").text('')
+      $("#result-pitch-class-name").text('')
     }
   })
 }

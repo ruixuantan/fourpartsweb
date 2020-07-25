@@ -1,34 +1,63 @@
 {% extends 'base.html' %}
 
+{% block navbarcontent %}
+<a class="nav-link active" href="/pitchclassset/">Pitch-Class</a>
+{% endblock %}
+
 {% block body %}
 <div>
-  <!-- Results -->
-  <div class="row justify-content-center" style="max-width: 600px;">
-    <div class="col-3">Pitch Class:</div>
-    <div class="col-3" id="result-pitch-class-set"></div>
-    <div class="col-3">Name:</div>
-    <div class="col-3" id="result-pitch-class-name"></div>
-  </div>
-  <!-- Results -->
-
   <!-- Pitch Class Set Form -->
   <form id="pitch-class-set-form">
-    <label><input type="checkbox" value="0" id="pitch-class-set-0">C</label>
-    <label><input type="checkbox" value="1" id="pitch-class-set-1">C#/Db</label>
-    <label><input type="checkbox" value="2" id="pitch-class-set-2">D</label>
-    <label><input type="checkbox" value="3" id="pitch-class-set-3">D#/Eb</label>
-    <label><input type="checkbox" value="4" id="pitch-class-set-4">E</label>
-    <label><input type="checkbox" value="5" id="pitch-class-set-5">F</label>
-    <label><input type="checkbox" value="6" id="pitch-class-set-6">F#/Gb</label>
-    <label><input type="checkbox" value="7" id="pitch-class-set-7">G</label>
-    <label><input type="checkbox" value="8" id="pitch-class-set-8">G#/Ab</label>
-    <label><input type="checkbox" value="9" id="pitch-class-set-9">A</label>
-    <label><input type="checkbox" value="10" id="pitch-class-set-10">A#/Bb</label>
-    <label><input type="checkbox" value="11" id="pitch-class-set-11">B</label>
-    <br>
-    <button id="pitch-class-set-button" type="button" class="btn btn-outline-primary">Get Results</button>
-    <button id="pitch-class-set-clear" type="button" class="btn btn-outline-danger">Clear</button>
+    <div class="table-responsive-md">
+      <table class="table pitch-class-set-form-table">
+        <thead>
+          <tr>
+            <td>C</td>
+            <td>C#/Db</td>
+            <td>D</td>
+            <td>D#/Eb</td>
+            <td>E</td>
+            <td>F</td>
+            <td>F#/Gb</td>
+            <td>G</td>
+            <td>G#/Ab</td>
+            <td>A</td>
+            <td>A#/Bb</td>
+            <td>B</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox" value="0" id="pitch-class-set-0"></td>
+            <td><input type="checkbox" value="1" id="pitch-class-set-1"></td>
+            <td><input type="checkbox" value="2" id="pitch-class-set-2"></td>
+            <td><input type="checkbox" value="3" id="pitch-class-set-3"></td>
+            <td><input type="checkbox" value="4" id="pitch-class-set-4"></td>
+            <td><input type="checkbox" value="5" id="pitch-class-set-5"></td>
+            <td><input type="checkbox" value="6" id="pitch-class-set-6"></td>
+            <td><input type="checkbox" value="7" id="pitch-class-set-7"></td>
+            <td><input type="checkbox" value="8" id="pitch-class-set-8"></td>
+            <td><input type="checkbox" value="9" id="pitch-class-set-9"></td>
+            <td><input type="checkbox" value="10" id="pitch-class-set-10"></td>
+            <td><input type="checkbox" value="11" id="pitch-class-set-11"></td>
+          </tr>
+          <tr>
+            <td colspan="3">Pitch Class:</td>
+            <td colspan="3" id="result-pitch-class-set"></td>
+            <td colspan="2">Name:</td>
+            <td colspan="4" id="result-pitch-class-name"></td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <button id="pitch-class-set-button" type="button" class="btn btn-outline-primary">Get Results</button>
+            </td>
+            <td colspan="6">
+              <button id="pitch-class-set-clear" type="button" class="btn btn-outline-danger">Clear</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </form>
-
 </div>
 {% endblock %}

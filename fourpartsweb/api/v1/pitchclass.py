@@ -16,7 +16,7 @@ class PitchclassView(V1FlaskView):
         try:
             pcs = fp.PitchClassSet.create_pitch_class_set(pitches)
         except IndexError:
-            return jsonify({'error': 'Only cardinality of less than 7 pitches is supported'}), 200
+            return jsonify({'error': 'Only cardinalities of less than 7 pitches are supported'}), 200
 
         response = {
             'pitches': pcs.pitches,
