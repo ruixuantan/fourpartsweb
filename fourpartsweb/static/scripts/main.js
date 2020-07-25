@@ -164,8 +164,57 @@ const downloadStorage = () => {
 }
 
 
+const getPitchClassSet = () => {
+
+  $("#pitch-class-set-button").click((e) => {
+    e.preventDefault()
+    let notes = []
+    for (let i=0; i<12; i++) {
+      $note = $("#pitch-class-set-"+i)
+      if ($note.is(":checked")) {
+        notes.push($note.attr("value"))
+      }
+    }
+  
+
+    return $.ajax({
+      url: '/api/v1/pitchclass/',
+      type: 'post',
+      data: JSON.stringify({notes: notes}),
+      contentType: 'application/json',
+      success: (data) => {
+        if (data.hasOwnProperty("error")) {
+          alert(data.error)
+        } else {
+          $("#result-pitch-class-set").text(data.pitches)
+          $("#result-pitch-class-name").text(data.name)
+        }
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  })
+}
+
+
+const clearPitchClassSet = () => {
+  $("#pitch-class-set-clear").click((e) => {
+    e.preventDefault()
+    for (let i=0; i<12; i++) {
+      $note = $("#pitch-class-set-"+i)
+      $note.prop('checked', false)
+      $("#result-pitch-class-set").text('')
+      $("#result-pitch-class-name").text('')
+    }
+  })
+}
+
+
 $(document).ready(() => {
   fileInput()
   fileUpload()
   downloadStorage()
+  getPitchClassSet()
+  clearPitchClassSet()
 })

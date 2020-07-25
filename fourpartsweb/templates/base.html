@@ -6,10 +6,12 @@
     <meta name="description" content="A website to analyse 4 part music writing">
     <meta charset="UTF-8" />
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
     <link
       rel="stylesheet"
@@ -31,6 +33,23 @@
     <noscript>Your browser does not support JavaScript!</noscript>
   </head>
   <body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-sm navbar-light">
+      <a class="navbar-brand" href="/">FOUR PARTS</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            {% block navbarcontent %}{% endblock %}
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Navbar -->
+
     <!-- Heading -->
     <div class="container">
       <span style="display:block;text-align:center;margin-top:40px;margin-bottom:0px;">
@@ -66,8 +85,8 @@
           <div class="col-md-12 mx-auto">
 
             <!-- Content -->
-            <h5 class="font-weight-bold text-uppercase mt-3 mb-4">About</h5>
-            <p style="text-align:justify;"> A project to analyse Bach Chorales. 
+            <h5 class="font-weight-bold text-uppercase mt-3 mb-4"><small>About</small></h5>
+            <p style="text-align:justify;"><small>A project to analyse Bach Chorales. 
               Currently, it can check the presence of parallel 5ths and 8ths and 
               identify the Pitch Class Set of the chords. 
               Future implementations of possibly: 
@@ -75,7 +94,7 @@
               At every instance when there are 4 'on' note events, a 'chord' is formed. 
               These chords will then be passed into the FourParts package and analysed.
               <i>When uploading the midi file, ensure that is has strictly only 4 parts.</i>
-              Click <u><a href="/download/sample/">HERE</a></u> for a sample.</p>
+              Click <u><a href="/download/sample/">HERE</a></u> for a sample.</small></p>
 
           </div>
           <!-- Grid column -->
