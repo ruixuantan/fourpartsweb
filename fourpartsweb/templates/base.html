@@ -36,7 +36,14 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-sm navbar-light">
-      <a class="navbar-brand" href="/">FOUR PARTS</a>
+      <!-- Navbar home logo -->
+      <a class="navbar-brand" href="/">
+        <img 
+          alt="FourParts logo"
+          src="{{ url_for('static', filename='images/Logo.png') }}" 
+          style="width:150px;height:49px;" />
+      </a>
+      <!-- Navbar home logo -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
         <span class="navbar-toggler-icon"></span>
       </button>
