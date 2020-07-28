@@ -43,5 +43,5 @@ a python hash is generated from the concatenated string of the current datetime 
 and original midi filename. This will then be used as the new filename of both midi and csv files.
 
 ## Next Steps ##
-1. Write tests.
+1. Write tests for CLI scripts and celery.
 2. Configure webpack to precompile jquery functions or refactor to another javascript library (React).
