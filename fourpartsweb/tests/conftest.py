@@ -11,6 +11,7 @@ def app():
     params = {
         'DEBUG': False,
         'TESTING': True,
+        'SECRET_KEY': settings.SECRET_KEY,
         'SQLALCHEMY_DATABASE_URI': db_uri,
         'MIDISTORE_PATH': settings.MIDISTORE_PATH,
         'PARALLEL_RESULTS_PATH': settings.PARALLEL_RESULTS_PATH,
