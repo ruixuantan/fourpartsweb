@@ -15,7 +15,7 @@ def _generate_hashed_filenames(filename):
         The hashed filenames of the midi and csv files.
     """
 
-    if filename[:-4] == '.mid':
+    if filename[-4:] == '.mid':
         filename = filename[:-4]
 
     hashed_filename = str(hash(filename + get_time_string()))

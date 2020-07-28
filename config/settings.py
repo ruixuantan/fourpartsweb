@@ -27,9 +27,9 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
 CELERYBEAT_SCHEDULE = {
-    # Executes every 10s
     'clean_db-every-hour': {
         'task': 'clean_db',
+        # default is 3600
         'schedule': 3600
     }
 }
