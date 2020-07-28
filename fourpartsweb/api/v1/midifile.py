@@ -1,42 +1,13 @@
 from flask import current_app, jsonify, request, send_file
-import fourparts as fp
 from io import BytesIO
 import os
-import pandas as pd
 from werkzeug.utils import secure_filename
 from zipfile import ZipFile
 
 from fourpartsweb.api.v1 import V1FlaskView
 from fourpartsweb.blueprints.midifile.models import Midifile
 from fourpartsweb.extensions import db
-from utils import get_time_string, delete_file, FileCollection
-
-
-def _generate_results(file_collection):
-    """Generates results of the analysed midi file.
-
-    Returns
-    -------
-    bool
-        Returns True if there are no errors in the analysis.
-    """
-
-    try:
-        df = fp.midi_to_df(file_collection.midi_path)
-        chords = fp.get_chord_progression(df)
-        chord_progression = fp.ChordProgression(chords)
-
-        result = chord_progression.check_parallels()
-        pd.DataFrame(result).to_csv(file_collection.parallels_path)
-
-        pitch_class_sets = chord_progression.get_pitch_class_sets()
-        pd.DataFrame(pitch_class_sets).to_csv(file_collection.chords_path)
-
-    except Exception:
-        delete_file(file_collection.midi_path)
-        return False
-
-    return True
+from utils import get_time_string, delete_file, generate_results, FileCollection
 
 
 def _db_commit(file_collection):
@@ -103,18 +74,20 @@ class MidifileView(V1FlaskView):
         # save midifile
         posted_file.save(os.path.join(file_collection.midi_path))
 
-        if not _generate_results(file_collection):
+        if not generate_results(file_collection.midi_path,
+                                file_collection.parallels_path,
+                                file_collection.chords_path):
             return jsonify({'error': 'an invalid midi file was uploaded'}), 400
 
         if not _db_commit(file_collection):
             return jsonify({'error': 'an internal server error occured.'}), 500
 
         try:
-
             zip_file = _zip_results(file_collection)
             filename = "results_{}.zip".format(get_time_string())
             return send_file(zip_file,
                              attachment_filename=filename,
                              as_attachment=True)
+
         except FileNotFoundError:
             return jsonify({'error': 'file is not properly zipped in server.'}), 500

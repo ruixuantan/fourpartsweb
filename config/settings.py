@@ -30,6 +30,7 @@ CELERYBEAT_SCHEDULE = {
     # Executes every 10s
     'clean_db-every-hour': {
         'task': 'clean_db',
-        'schedule': 3600
+        # default is 3600
+        'schedule': 10
     }
 }
