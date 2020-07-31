@@ -1,10 +1,11 @@
 from celery.schedules import crontab
+import os
 
 
 DEBUG = False
 
 SERVER_NAME = 'fourparts.herokuapp.com'
-SECRET_KEY = 'insert secure key here'
+SECRET_KEY = os.environ['PRODUCTION_SECRET_KEY']
 
 STORE_PATH = 'fourpartsweb/storage/'
 MIDISTORE_PATH = STORE_PATH + 'midifiles/'
@@ -17,7 +18,7 @@ CHORD_RESULTS_PATH = STORE_PATH + 'chord_results/'
 
 db_uri = 'insert heroku key here'
 
-SQLALCHEMY_DATABASE_URI = db_uri
+SQLALCHEMY_DATABASE_URI = os.environ['PRODUCTION_DB_URI']
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Celery.
