@@ -12,6 +12,7 @@ flake8==3.8.3
 numpy==1.19.0
 pandas==1.0.5
 py-midicsv==1.10.0
+MIDIUtil==1.2.1
 
 # Database
 psycopg2==2.8.5

@@ -68,7 +68,7 @@ def generate_results(midi_path, parallels_path, chords_path):
 
     try:
         df = fp.midi_to_df(midi_path)
-        chords = fp.get_chord_progression(df)
+        chords = fp.PreProcessor(4).get_progression(df)
         chord_progression = fp.ChordProgression(chords)
     except Exception:
         delete_file(midi_path)

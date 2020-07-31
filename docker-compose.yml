@@ -22,7 +22,7 @@ services:
   server:
     build: .
     command: >
-      gunicorn -c "python:config.gunicorn" --reload "fourpartsweb.app:create_app()"
+      gunicorn "fourpartsweb.app:create_app()"
     depends_on:
       - "postgres"
     ports:
