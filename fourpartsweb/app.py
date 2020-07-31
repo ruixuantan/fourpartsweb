@@ -43,7 +43,7 @@ def create_celery_app(app=None):
 def create_app(settings_override=None):
     app = Flask(__name__, instance_relative_config=True)
 
-    app.config.from_object('instance.settings')
+    app.config.from_object('config.settings')
 
     if settings_override:
         app.config.update(settings_override)

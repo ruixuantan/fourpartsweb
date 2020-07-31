@@ -13,4 +13,4 @@ COPY . .
 RUN pip install --editable .
 RUN pip install packages/fourparts-0.0.1-py3-none-any.whl
 
-CMD gunicorn "fourpartsweb.app:create_app()"
+CMD gunicorn -c "python:config.gunicorn" --reload "fourpartsweb.app:create_app()"
