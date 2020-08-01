@@ -3,20 +3,22 @@ The deployment of the Fourparts package (https://github.com/ruixuantan/FourParts
 Link to site: https://fourparts.herokuapp.com
 
 To build project:
-```
-$ python3 setup.py bdist_wheel
-$ docker-compose up --build
-```
 
 Create a `.env` file in the root of the directory and configure it:
 ```
-1. COMPOSE_PROJECT_NAME=fourpartsweb
-2. POSTGRES_USER=fourparts
-3. POSTGRES_PASSWORD=fourpartspassword
-4. POSTGRES_DB=fourparts
-5. PYTHONUNBUFFERED=true
-6. PRODUCTION_SECRET_KEY=insertsecurekey
-7. PRODUCTION_DB_URI=insertdburikey
+COMPOSE_PROJECT_NAME=fourpartsweb
+POSTGRES_USER=insertuser
+POSTGRES_PASSWORD=insertpassword
+POSTGRES_DB=insertdb
+PYTHONUNBUFFERED=true
+PRODUCTION_SECRET_KEY=insertsecurekey
+PRODUCTION_DB_URI=insertdburikey
+```
+
+Then, run:
+```
+$ python3 setup.py bdist_wheel
+$ docker-compose up --build
 ```
 
 To configure postgres, open up a new terminal while the container is running and enter:
@@ -41,7 +43,8 @@ $ docker-compose run server fourpartsweb storage del-storage
 
 ## Deployment ##
 ### Heroku ###
-Ensure set up of initial app and postgres add-on in Heroku. 
+Ensure set up of initial app and postgres add-on in Heroku.
+Create an `instance/settings.py` file, similar to that in `config/settings.py`, but with the actual production keys.
 
 In app.py, change `app.config.from_object('config.settings')` to `app.config.from_object('instance.settings')`
 
