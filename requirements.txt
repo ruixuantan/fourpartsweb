@@ -13,6 +13,7 @@ numpy==1.19.0
 pandas==1.0.5
 py-midicsv==1.10.0
 MIDIUtil==1.2.1
+scikit-learn==0.23.2
 
 # Database
 psycopg2==2.8.5

@@ -2,12 +2,15 @@ from flask import Flask
 from celery import Celery
 import os
 
+from key_classifier.KeyClassifier import initialise_key_classifier
+
 from fourpartsweb.blueprints.index import index
 from fourpartsweb.blueprints.download import download
 from fourpartsweb.blueprints.pitchclassset import pitch_class_set
 from fourpartsweb.api.v1.midifile import MidifileView
 from fourpartsweb.api.v1.download import DownloadView
 from fourpartsweb.api.v1.pitchclass import PitchclassView
+from fourpartsweb.api.v1.keyclassifier import KeyclassifierView
 from fourpartsweb.extensions import (
     debug_toolbar,
     db,
@@ -59,6 +62,9 @@ def create_app(settings_override=None):
     MidifileView.register(app)
     DownloadView.register(app)
     PitchclassView.register(app)
+    KeyclassifierView.register(app)
+
+    classifier = initialise_key_classifier()
 
     return app
 
