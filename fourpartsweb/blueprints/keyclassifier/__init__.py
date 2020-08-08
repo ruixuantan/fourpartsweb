@@ -1,0 +1,1 @@
+from fourpartsweb.blueprints.keyclassifier.views import key_classifier

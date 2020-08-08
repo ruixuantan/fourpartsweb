@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% from 'macros/navbar.html' import navbar %}
 
 {% block navbarcontent %}
-<a class="nav-link" href="/pitchclassset/">Pitch-Class</a>
+{{ navbar('') }}
 {% endblock %}
 
 {% block body %}
@@ -29,3 +30,8 @@
   </div>
 </div>
 {% endblock %}
+
+{% block aboutcontent %}
+Contact admin to obtain the key to download all midifiles 
+and associated results that have been uploaded.
+{% endblock %} 
