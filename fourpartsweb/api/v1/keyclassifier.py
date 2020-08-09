@@ -1,5 +1,6 @@
 import os
 
+from fourparts import Key
 from flask import jsonify, request, current_app
 from werkzeug.utils import secure_filename
 from fourpartsweb.api.v1 import V1FlaskView
@@ -23,7 +24,8 @@ class KeyclassifierView(V1FlaskView):
         filedir = current_app.config['MIDISTORE_PATH'] + filename_mid
         posted_file.save(os.path.join(filedir))
 
-        key = current_app.config['KEY_CLASSIFIER'].predict_midi(filedir)[0]
+        key_index = current_app.config['KEY_CLASSIFIER'].predict_midi(filedir)[0]
+        key = Key.get_key_from_index(key_index).__str__()
         delete_file(filedir)
 
         response = jsonify({'key': key})

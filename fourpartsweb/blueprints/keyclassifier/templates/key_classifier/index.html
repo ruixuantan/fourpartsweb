@@ -32,12 +32,12 @@
 {% endblock %}
 
 {% block aboutcontent %}
-Here, a neural network is implemented with 
+Here, an SVM is implemented with 
 <a href="https://scikit-learn.org/stable/modules/classes.html">scikit-learn</a> 
 to detect the key of a given midi file.
-Currently, the neural network is trained based on Bach's Inventions, Sinfonias, Well-Tempered-Clavier pieces.
+Currently, the model is trained based on Bach's Inventions, Sinfonias, Well-Tempered-Clavier pieces.
 For each piece, the occurence of each pitch is counted and then converted into a percentage.
 For example, C: 20.00%, C#/Db: 30.00%, D: 15.00%, ...
 These frequencies are then transposed to the rest of the remaining 11 keys.
-The neural network maps these percentages to its associated key.
+The model classifies these percentages to its associated key.
 {% endblock %} 
