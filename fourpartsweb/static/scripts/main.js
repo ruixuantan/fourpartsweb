@@ -91,25 +91,24 @@ const downloadFile = (data, type, filename) => {
 }
 
 
-const fileUpload = () => {
+const clearMidi = () => {
+  midifile = null
+  $("#midi-input").val(null)
+}
 
-  const clearMidi = () => {
-    midifile = null
-    $("#midi-input").val(null)
-  }
 
-  $(".file-upload-btn").click(() => {
-
-    let midifile = $("#midi-input")[0].files[0]
+const parallelCheckUpload = () => {
+  $("#parallel-check-upload-btn").click(() => {
     const formData = new FormData()
+    midifile = $("#midi-input")[0].files[0]
     formData.append('file', midifile)
-
+  
     if (midifile == null) {
       alert("Upload a file first!")
       statusBar("", "CLEAR")
       return null
     }
-
+    
     ajaxConfig()
 
     return $.ajax({
@@ -211,10 +210,42 @@ const clearPitchClassSet = () => {
 }
 
 
+const keyClassifierUpload = () => {
+  $("#key-classifier-upload-btn").click(() => {
+    const formData = new FormData()
+    midifile = $("#midi-input")[0].files[0]
+    formData.append('file', midifile)
+  
+    if (midifile == null) {
+      alert("Upload a file first!")
+      statusBar("", "CLEAR")
+      return null
+    }
+    
+    return $.ajax({
+      url: '/api/v1/keyclassifier/',
+      type: 'post',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: (data, textStatus, jqXHR) => {
+        statusBar("Key is " + data.key + ". ", "SUCCESS")
+      },
+      error: (err) => {
+        console.log(err)
+        statusBar("", "FAIL")
+        clearMidi()
+      }
+    })
+  })
+}
+
+
 $(document).ready(() => {
   fileInput()
-  fileUpload()
+  parallelCheckUpload()
   downloadStorage()
   getPitchClassSet()
   clearPitchClassSet()
+  keyClassifierUpload()
 })

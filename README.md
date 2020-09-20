@@ -11,8 +11,6 @@ POSTGRES_USER=insertuser
 POSTGRES_PASSWORD=insertpassword
 POSTGRES_DB=insertdb
 PYTHONUNBUFFERED=true
-PRODUCTION_SECRET_KEY=insertsecurekey
-PRODUCTION_DB_URI=insertdburikey
 ```
 
 Then, run:
@@ -51,9 +49,7 @@ In app.py, change `app.config.from_object('config.settings')` to `app.config.fro
 In Dockerfile and docker-compose.yml, change the command to `gunicorn "fourpartsweb.app:create_app()"`
 
 ## Notes ##
-Currently, to avoid duplicates of filenames, when the midi file is uploaded, 
-a python hash is generated from the concatenated string of the current datetime object
-and original midi filename. This will then be used as the new filename of both midi and csv files.
+Currently, to avoid duplicates of filenames, when the midi file is uploaded, a python hash is generated from the concatenated string of the current datetime object and original midi filename. This will then be used as the new filename of both midi and csv files.
 
 ## Next Steps ##
 1. Write tests for CLI scripts and celery.

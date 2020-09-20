@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% from 'macros/navbar.html' import navbar %}
 
 {% block navbarcontent %}
-<a class="nav-link active" href="/pitchclassset/">Pitch-Class</a>
+{{ navbar('pitch_class') }}
 {% endblock %}
 
 {% block body %}
@@ -61,3 +62,8 @@
   </form>
 </div>
 {% endblock %}
+
+{% block aboutcontent %}
+This is a simple tool to check the Pitch Class Set of any input notes.
+Currently, it can only give the Pitch Class Set of cardinalities less than 7.
+{% endblock %} 

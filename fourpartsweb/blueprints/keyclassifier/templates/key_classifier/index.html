@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% from 'macros/uploadcontainer.html' import uploadcontainer %}
+{% from 'macros/navbar.html' import navbar %}
+
+
+{% block navbarcontent %}
+{{ navbar('key_classifier') }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="file-upload">
+
+      <!-- Upload buttons -->
+      <button
+        class="file-upload-btn"
+        id="key-classifier-upload-btn" 
+        type="button">Check Key</button>
+
+      <!-- File input -->
+      {{ uploadcontainer() }} 
+
+      <br />
+      
+      <!-- Status bar -->
+      <div id="status-bar"></div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block aboutcontent %}
+Here, an SVM is implemented with 
+<a href="https://scikit-learn.org/stable/modules/classes.html">scikit-learn</a> 
+to detect the key of a given midi file.
+Currently, the model is trained based on Bach's Inventions, Sinfonias, Well-Tempered-Clavier pieces.
+For each piece, the occurence of each pitch is counted and then converted into a percentage.
+For example, C: 20.00%, C#/Db: 30.00%, D: 15.00%, ...
+These frequencies are then transposed to the rest of the remaining 11 keys.
+The model classifies these percentages to its associated key.
+{% endblock %} 

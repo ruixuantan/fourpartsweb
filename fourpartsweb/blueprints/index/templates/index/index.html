@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% from 'macros/uploadcontainer.html' import uploadcontainer %}
+{% from 'macros/navbar.html' import navbar %}
+
+{% block navbarcontent %}
+{{ navbar('') }}
+{% endblock %}}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="file-upload">
+
+      <!-- Upload buttons -->
+      <button
+        class="file-upload-btn"
+        id="parallel-check-upload-btn"  
+        type="button">Upload</button>
+
+      <!-- File input -->
+      {{ uploadcontainer() }} 
+
+      <br />
+      
+      <!-- Status bar -->
+      <div id="status-bar"></div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block aboutcontent %}
+This page checks the presence of parallel 5ths and 8ths and identifies the Pitch Class Set of the chords. 
+Future implementations of possibly: 
+detection of cadences and the generation of Bach Chorales. How it works: 
+At every instance when there are 4 'on' note events, a 'chord' is formed. 
+These chords will then be passed into the FourParts package and analysed.
+<i>When uploading the midi file, ensure that is has strictly only 4 parts.</i>
+Click <u><a href="/download/sample/">HERE</a></u> for a sample.
+{% endblock %} 
