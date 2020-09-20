@@ -2,11 +2,13 @@
 The deployment of [FourParts](https://github.com/ruixuantan/FourParts) on a [flask app](https://fourparts.herokuapp.com).
 
 ### ToC
-1. [Setup](#setup)
+1. [Flask Setup](#flask-setup)
+1. [Flask CLI](#flask-cli)
 1. [Deployment](#deployment)
+1. [Streamlit](#streamlit)
 1. [Misc](#misc)
 
-## Setup
+## Flask Setup
 To build project:
 
 Create a `.env` file in the root of the directory and configure it:
@@ -32,7 +34,7 @@ $ docker-compose run server fourpartsweb db init
 Local build is on http://localhost:8000 \
 Midi samples can be found [here](https://github.com/ruixuantan/FourParts/tree/master/samples)
 
-## CLI
+## Flask CLI
 To run tests and flake8:
 ```
 $ docker-compose exec server pytest
@@ -52,6 +54,21 @@ Create an `instance/settings.py` file, similar to that in `config/settings.py`, 
 In app.py, change `app.config.from_object('config.settings')` to `app.config.from_object('instance.settings')`
 
 In Dockerfile and docker-compose.yml, change the command to `gunicorn "fourpartsweb.app:create_app()"`
+
+## Streamlit
+The [Streamlit](https://www.streamlit.io) package is used to train the KeyClassifier model.
+
+A python venv has to be setup first, along with the python packages.
+```
+python3 -m venv env
+pip install -r requirements.txt
+```
+
+To start the streamlit app, run:
+```
+streamlit run streamlit_app/key_classifier_app.py
+```
+Build will be on http://localhost:8501.
 
 ## Misc
 ### Notes
