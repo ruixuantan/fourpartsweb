@@ -1,7 +1,12 @@
-# Fourparts Web #
-The deployment of the Fourparts package (https://github.com/ruixuantan/FourParts) on a site. \
-Link to site: https://fourparts.herokuapp.com
+# FourPartsWeb
+The deployment of [FourParts](https://github.com/ruixuantan/FourParts) on a [flask app](https://fourparts.herokuapp.com).
 
+### ToC
+1. [Setup](#setup)
+1. [Deployment](#deployment)
+1. [Misc](#misc)
+
+## Setup
 To build project:
 
 Create a `.env` file in the root of the directory and configure it:
@@ -25,9 +30,9 @@ $ docker-compose run server fourpartsweb db init
 ```
 
 Local build is on http://localhost:8000 \
-Midi samples can be found here: https://github.com/ruixuantan/FourParts/tree/master/samples
+Midi samples can be found [here](https://github.com/ruixuantan/FourParts/tree/master/samples)
 
-## CLI ##
+## CLI
 To run tests and flake8:
 ```
 $ docker-compose exec server pytest
@@ -39,8 +44,8 @@ To delete storage files:
 $ docker-compose run server fourpartsweb storage del-storage
 ```
 
-## Deployment ##
-### Heroku ###
+## Deployment
+### Heroku
 Ensure set up of initial app and postgres add-on in Heroku.
 Create an `instance/settings.py` file, similar to that in `config/settings.py`, but with the actual production keys.
 
@@ -48,9 +53,10 @@ In app.py, change `app.config.from_object('config.settings')` to `app.config.fro
 
 In Dockerfile and docker-compose.yml, change the command to `gunicorn "fourpartsweb.app:create_app()"`
 
-## Notes ##
+## Misc
+### Notes
 Currently, to avoid duplicates of filenames, when the midi file is uploaded, a python hash is generated from the concatenated string of the current datetime object and original midi filename. This will then be used as the new filename of both midi and csv files.
 
-## Next Steps ##
+### Next Steps
 1. Write tests for CLI scripts and celery.
 2. Configure webpack to precompile jquery functions or refactor to another javascript library (React).
