@@ -28,7 +28,7 @@ flask-classful==0.14.2
 
 # Web stuff
 Flask==1.1.2
-Jinja2==2.11.2
+Jinja2==2.11.3
 Werkzeug==1.0.1
 
 # Server for production and development
